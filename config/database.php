@@ -56,7 +56,28 @@ return [
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
-            'strict' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::ATTR_EMULATE_PREPARES => true,
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'mail' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('MAILDB_HOST', '127.0.0.1'),
+            'port' => env('MAILDB_PORT', '3306'),
+            'database' => env('MAILDB_DATABASE', 'forge'),
+            'username' => env('MAILDB_USERNAME', 'forge'),
+            'password' => env('MAILDB_PASSWORD', ''),
+            'unix_socket' => env('MAILDB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
@@ -91,6 +112,17 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'host' => env('MDB_HOST', '127.0.0.1'),
+            'port' => env('MDB_PORT', 27017),
+            'database' => env('MDB_DATABASE', 'homestead'),
+            'username' => env('MDB_USERNAME', 'homestead'),
+            'password' => env('MDB_PASSWORD', 'secret'),
+            'options' => [
+                'database' => env('DB_AUTHENTICATION_DATABASE', 'admin'), // required with Mongo 3+
+            ],
+        ],
     ],
 
     /*
